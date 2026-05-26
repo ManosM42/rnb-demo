@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { HeroSlider } from "@/components/HeroSlider";
+import { FramedAnimation } from "@/components/FramedAnimation";
 import { MapEmbed } from "@/components/MapEmbed";
 import { Reveal, staggerContainer, staggerItem } from "@/components/Reveal";
 import { GallerySlider } from "@/components/GallerySlider";
@@ -22,6 +23,9 @@ function HomePage() {
   return (
     <>
       <HeroSlider />
+
+      {/* Framed Animation */}
+      <FramedAnimation />
 
       {/* About */}
       <section className="relative px-6 py-28 section-fade-top">
@@ -108,30 +112,30 @@ function HomePage() {
         </div>
       </section>
 
-  {/* Map */}
-<section className="relative px-6 py-28 section-fade-top">
-  <div className="mx-auto max-w-6xl">
-    <Reveal className="text-center">
-      <p className="mb-4 text-xs uppercase tracking-[0.4em] text-gold">Visit Us</p>
-      <h2 className="gold-underline font-display text-4xl md:text-5xl">Find Us in Malia</h2>
-    </Reveal>
+      {/* Map */}
+      <section className="relative px-6 py-28 section-fade-top">
+        <div className="mx-auto max-w-6xl">
+          <Reveal className="text-center">
+            <p className="mb-4 text-xs uppercase tracking-[0.4em] text-gold">Visit Us</p>
+            <h2 className="gold-underline font-display text-4xl md:text-5xl">Find Us in Malia</h2>
+          </Reveal>
 
-    <Reveal delay={0.2} className="mt-16">
-      <MapEmbed />
-      <div className="mt-8 flex flex-col items-center gap-4 text-center">
-        <p className="text-foreground/75">Malia, Crete, Greece</p>
-        
-         <a href="https://www.google.com/maps/place/R%26B+Plus/@35.2880207,25.4593476,17z"
-          target="_blank"
-          rel="noreferrer"
-          className="btn-gold"
-        >
-          Get Directions
-        </a>
-      </div>
-    </Reveal>
-  </div>
-</section>
+          <Reveal delay={0.2} className="mt-16">
+            <MapEmbed />
+            <div className="mt-8 flex flex-col items-center gap-4 text-center">
+              <p className="text-foreground/75">Malia, Crete, Greece</p>
+              
+               <a href="https://www.google.com/maps/place/R%26B+Plus/@35.2880207,25.4593476,17z"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-gold"
+              >
+                Get Directions
+              </a>
+            </div>
+          </Reveal>
+        </div>
+      </section>
     </>
   );
-} 
+}
