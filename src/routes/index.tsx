@@ -6,6 +6,8 @@ import { FramedAnimation } from "@/components/FramedAnimation";
 import { MapEmbed } from "@/components/MapEmbed";
 import { Reveal, staggerContainer, staggerItem } from "@/components/Reveal";
 import { GallerySlider } from "@/components/GallerySlider";
+import slider4Img from "@/assets/slider-4.jpg";
+import slider2Img from "@/assets/slider-2.jpg";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -28,7 +30,10 @@ function HomePage() {
       <FramedAnimation />
 
       {/* About */}
-      <section className="relative px-6 py-28 section-fade-top">
+      <section className="relative px-6 py-28 overflow-hidden">
+  <div className="absolute inset-0" style={{ backgroundImage: `url(${slider4Img})`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }} />
+  <div className="absolute inset-0 bg-black/78 backdrop-blur-[2px]" />
+  <div className="relative z-10">
         <div className="mx-auto grid max-w-7xl items-center gap-16 md:grid-cols-2">
           <Reveal x={-40} y={0}>
             <p className="mb-4 text-xs uppercase tracking-[0.4em] text-gold">About R&amp;B</p>
@@ -59,48 +64,63 @@ function HomePage() {
             </div>
           </Reveal>
         </div>
-      </section>
-
-      {/* Reviews */}
-      <section className="relative px-6 py-28">
-        <div className="mx-auto max-w-7xl">
-          <Reveal className="text-center">
-            <p className="mb-4 text-xs uppercase tracking-[0.4em] text-gold">Reviews</p>
-            <h2 className="gold-underline font-display text-4xl md:text-5xl">What People Are Saying</h2>
-          </Reveal>
-
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.1 }}
-            className="mt-20 flex gap-6 overflow-x-auto pb-6 md:grid md:grid-cols-3 md:overflow-visible"
-          >
-            {reviews.map((r) => (
-              <motion.article
-                key={r.name}
-                variants={staggerItem}
-                className="glass min-w-[85%] flex-shrink-0 rounded-2xl p-7 md:min-w-0"
-              >
-                <div className="mb-4 flex gap-1 text-gold">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} size={16} fill="#c8a951" stroke="#c8a951" />
-                  ))}
-                </div>
-                <p className="text-sm leading-relaxed text-foreground/85">"{r.text}"</p>
-                <p className="mt-5 font-display text-lg text-gold">{r.name}</p>
-              </motion.article>
-            ))}
-          </motion.div>
-
-          <p className="mt-10 text-center text-xs uppercase tracking-[0.3em] text-foreground/40">
-            Powered by Google Reviews
-          </p>
         </div>
       </section>
 
+      {/* Reviews */}
+<section className="relative px-6 py-28 overflow-hidden">
+  <div className="absolute inset-0" style={{ backgroundImage: `url(${slider4Img})`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }} />
+  <div className="absolute inset-0 bg-black/78 backdrop-blur-[2px]" />
+  <div className="relative z-10">
+    <div className="mx-auto max-w-7xl">
+      <Reveal className="text-center">
+        <p className="mb-4 text-xs uppercase tracking-[0.4em] text-gold">Reviews</p>
+        <h2 className="gold-underline font-display text-4xl md:text-5xl">What People Are Saying</h2>
+      </Reveal>
+
+      <div className="mt-20 relative overflow-hidden">
+        {/* fade edges */}
+        <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to right, rgba(0,0,0,0.7), transparent)" }} />
+        <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to left, rgba(0,0,0,0.7), transparent)" }} />
+
+        <motion.div
+          className="flex gap-6"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+          style={{ width: "max-content" }}
+        >
+          {[...reviews, ...reviews].map((r, i) => (
+            <article
+              key={i}
+              className="glass flex-shrink-0 rounded-2xl p-7"
+              style={{ width: "360px" }}
+            >
+              <div className="mb-4 flex gap-1 text-gold">
+                {Array.from({ length: 5 }).map((_, j) => (
+                  <Star key={j} size={16} fill="#c8a951" stroke="#c8a951" />
+                ))}
+              </div>
+              <p className="text-sm leading-relaxed text-foreground/85">"{r.text}"</p>
+              <p className="mt-5 font-display text-lg text-gold">{r.name}</p>
+            </article>
+          ))}
+        </motion.div>
+      </div>
+
+      <p className="mt-10 text-center text-xs uppercase tracking-[0.3em] text-foreground/40">
+        Powered by Google Reviews
+      </p>
+    </div>
+  </div>
+</section>
+
       {/* Gallery */}
-      <section className="relative px-6 py-28">
+     <section className="relative px-6 py-28 overflow-hidden">
+  <div className="absolute inset-0" style={{ backgroundImage: `url(${slider2Img})`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }} />
+  <div className="absolute inset-0 bg-black/78 backdrop-blur-[2px]" />
+  <div className="relative z-10">
         <div className="mx-auto max-w-7xl">
           <Reveal className="mb-14 text-center">
             <p className="mb-4 text-xs uppercase tracking-[0.4em] text-gold">Inside R&amp;B</p>
@@ -109,6 +129,7 @@ function HomePage() {
           <Reveal delay={0.15}>
             <GallerySlider />
           </Reveal>
+        </div>
         </div>
       </section>
 
@@ -135,6 +156,7 @@ function HomePage() {
             </div>
           </Reveal>
         </div>
+     
       </section>
     </>
   );

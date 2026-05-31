@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { Reveal } from "@/components/Reveal";
+import slider1Img from "@/assets/slider-1.jpg";
+import slider3Img from "@/assets/slider-3.jpg";
 
 export const Route = createFileRoute("/menu")({
   head: () => ({
@@ -56,17 +58,16 @@ function MenuPage() {
 
   return (
     <>
-      {/* Hero */}
+      {/* Hero — slider-1.jpg */}
       <section
         className="relative flex h-[60vh] items-center justify-center px-6 text-center"
         style={{
-          background: "radial-gradient(ellipse at 30% 40%, rgba(160,32,240,0.4), transparent 55%), radial-gradient(ellipse at 70% 60%, rgba(200,169,81,0.4), transparent 55%), linear-gradient(135deg, #050508, #120822 70%, #050508)",
+          backgroundImage: `url(${slider1Img})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
-        <div
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(to bottom, rgba(5,5,8,0.5), rgba(5,5,8,0.85))" }}
-        />
+        <div className="absolute inset-0" style={{ backgroundColor: "rgba(0,0,0,0.60)" }} />
         <div className="relative z-10">
           <p className="mb-4 text-xs uppercase tracking-[0.45em] text-gold">The Menu</p>
           <h1 className="font-display text-5xl text-glow-gold md:text-7xl">Our Menu</h1>
@@ -74,55 +75,65 @@ function MenuPage() {
         </div>
       </section>
 
-      {/* Tabs */}
-      <section className="px-6 py-20">
-        <div className="mx-auto max-w-5xl">
-          <div className="mb-14 flex flex-wrap justify-center gap-2 md:gap-6">
-            {tabs.map((t) => (
-              <button
-                key={t}
-                onClick={() => setActive(t)}
-                className="relative px-4 py-3 text-sm uppercase tracking-[0.2em] transition-colors"
-                style={{ color: active === t ? "#c8a951" : "rgba(240,237,230,0.6)" }}
-              >
-                {t}
-                {active === t && (
-                  <motion.div
-                    layoutId="tab-underline"
-                    className="absolute -bottom-1 left-0 right-0 mx-auto h-[2px] bg-gold"
-                    style={{ width: "60%", marginInline: "20%" }}
-                  />
-                )}
-              </button>
-            ))}
-          </div>
+      {/* Tabs — slider-3.jpg */}
+      <div
+        style={{
+          backgroundImage: `url(${slider3Img})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div style={{ backgroundColor: "rgba(0,0,0,0.78)", backdropFilter: "blur(2px)" }}>
+          <section className="px-6 py-20">
+            <div className="mx-auto max-w-5xl">
+              <div className="mb-14 flex flex-wrap justify-center gap-2 md:gap-6">
+                {tabs.map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setActive(t)}
+                    className="relative px-4 py-3 text-sm uppercase tracking-[0.2em] transition-colors"
+                    style={{ color: active === t ? "#c8a951" : "rgba(240,237,230,0.6)" }}
+                  >
+                    {t}
+                    {active === t && (
+                      <motion.div
+                        layoutId="tab-underline"
+                        className="absolute -bottom-1 left-0 right-0 mx-auto h-[2px] bg-gold"
+                        style={{ width: "60%", marginInline: "20%" }}
+                      />
+                    )}
+                  </button>
+                ))}
+              </div>
 
-          <AnimatePresence mode="wait">
-            <motion.ul
-              key={active}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.4 }}
-              className="space-y-2"
-            >
-              {menu[active].map((item, i) => (
-                <Reveal key={item.name} delay={i * 0.05} y={20}>
-                  <li className="group flex items-baseline gap-4 border-b border-foreground/10 py-5">
-                    <div className="flex-1">
-                      <h3 className="font-display text-2xl text-gold">{item.name}</h3>
-                      {item.desc && (
-                        <p className="mt-1 text-sm text-foreground/65">{item.desc}</p>
-                      )}
-                    </div>
-                    <div className="flex-shrink-0 font-display text-xl text-gold">{item.price}</div>
-                  </li>
-                </Reveal>
-              ))}
-            </motion.ul>
-          </AnimatePresence>
+              <AnimatePresence mode="wait">
+                <motion.ul
+                  key={active}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.4 }}
+                  className="space-y-2"
+                >
+                  {menu[active].map((item, i) => (
+                    <Reveal key={item.name} delay={i * 0.05} y={20}>
+                      <li className="group flex items-baseline gap-4 border-b border-foreground/10 py-5">
+                        <div className="flex-1">
+                          <h3 className="font-display text-2xl text-gold">{item.name}</h3>
+                          {item.desc && (
+                            <p className="mt-1 text-sm text-foreground/65">{item.desc}</p>
+                          )}
+                        </div>
+                        <div className="flex-shrink-0 font-display text-xl text-gold">{item.price}</div>
+                      </li>
+                    </Reveal>
+                  ))}
+                </motion.ul>
+              </AnimatePresence>
+            </div>
+          </section>
         </div>
-      </section>
+      </div>
     </>
   );
 }

@@ -24,12 +24,14 @@ export function FramedAnimation() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // Size canvas to window
     const setSize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       drawFrame(frameRef.current.current);
     };
 
+    // Preload all frames
     const images: HTMLImageElement[] = [];
     let loaded = 0;
 
@@ -51,6 +53,7 @@ export function FramedAnimation() {
       const img = imagesRef.current[index];
       if (!img || !ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Cover fit
       const scale = Math.max(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
       const w = img.naturalWidth * scale;
       const h = img.naturalHeight * scale;
@@ -62,6 +65,7 @@ export function FramedAnimation() {
     function initScrollTrigger() {
       const obj = frameRef.current;
 
+      // Main frame scrub
       gsap.to(obj, {
         current: TOTAL_FRAMES - 1,
         ease: "none",
@@ -70,6 +74,7 @@ export function FramedAnimation() {
           start: "top top",
           end: "bottom bottom",
           scrub: 0.5,
+          pin: false,
           onUpdate: () => {
             const frame = Math.round(obj.current);
             drawFrame(frame);
@@ -77,22 +82,60 @@ export function FramedAnimation() {
         },
       });
 
-      gsap.fromTo(heading1Ref.current, { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.4,
-        scrollTrigger: { trigger: container, start: "28% top", end: "38% top", scrub: true },
-      });
+      // Heading 1 — appears at 1/3, disappears before 2/3
+      gsap.fromTo(
+        heading1Ref.current,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
+          scrollTrigger: {
+            trigger: container,
+            start: "28% top",
+            end: "38% top",
+            scrub: true,
+          },
+        }
+      );
       gsap.to(heading1Ref.current, {
-        opacity: 0, y: -30, duration: 0.4,
-        scrollTrigger: { trigger: container, start: "52% top", end: "58% top", scrub: true },
+        opacity: 0,
+        y: -30,
+        duration: 0.4,
+        scrollTrigger: {
+          trigger: container,
+          start: "52% top",
+          end: "58% top",
+          scrub: true,
+        },
       });
 
-      gsap.fromTo(heading2Ref.current, { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.4,
-        scrollTrigger: { trigger: container, start: "62% top", end: "72% top", scrub: true },
-      });
+      // Heading 2 — appears at 2/3, disappears near end
+      gsap.fromTo(
+        heading2Ref.current,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.4,
+          scrollTrigger: {
+            trigger: container,
+            start: "62% top",
+            end: "72% top",
+            scrub: true,
+          },
+        }
+      );
       gsap.to(heading2Ref.current, {
-        opacity: 0, y: -30, duration: 0.4,
-        scrollTrigger: { trigger: container, start: "88% top", end: "95% top", scrub: true },
+        opacity: 0,
+        y: -30,
+        duration: 0.4,
+        scrollTrigger: {
+          trigger: container,
+          start: "88% top",
+          end: "95% top",
+          scrub: true,
+        },
       });
     }
 
@@ -104,14 +147,22 @@ export function FramedAnimation() {
   }, []);
 
   return (
+    // Tall container — scroll distance = animation length
     <div ref={containerRef} className="framed-animation-container">
+      {/* Sticky viewport */}
       <div className="framed-animation-sticky">
         <canvas ref={canvasRef} className="framed-animation-canvas" />
+
+        {/* Dark vignette */}
         <div className="framed-animation-vignette" />
+
+        {/* Heading 1 — Unforgettable Nights */}
         <div ref={heading1Ref} className="framed-animation-heading" style={{ opacity: 0 }}>
           <p className="framed-animation-eyebrow">R&amp;B Malia</p>
           <h2 className="framed-animation-title">Unforgettable Nights</h2>
         </div>
+
+        {/* Heading 2 — Start Here */}
         <div ref={heading2Ref} className="framed-animation-heading" style={{ opacity: 0 }}>
           <p className="framed-animation-eyebrow">Your night awaits</p>
           <h2 className="framed-animation-title framed-animation-title--gold">Start Here.</h2>
